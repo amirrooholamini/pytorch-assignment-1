@@ -14,6 +14,10 @@ parser.add_argument('--image', type=str, default='sample.png', help='image path'
 args = parser.parse_args()
 
 string_labels = ['T-shirt/top','Trouser','Pullover','Dress','Coat','Sandal','Shirt','Sneaker','Bag','	Ankle boot']
+transforms = torchvision.transforms.Compose([
+       torchvision.transforms.ToTensor(),  
+       torchvision.transforms.Normalize((0),(1))                 
+])
 
 cpuDevice = torch.device(args.device)
 model = Model()
@@ -26,13 +30,15 @@ img = cv.imread(args.image)
 img = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
 img = cv.resize(img, (28,28))
 
-transforms = torchvision.transforms.Compose([
-       torchvision.transforms.ToTensor(),                 
-])
-tensor = transforms(img).unsqueeze(0)
+list = []
+list.append(img)
+list.append(img)
+list.append(img)
+tensor = torch.Tensor(list)
+# img = transforms(img).unsqueeze(0)
 tensor = tensor.to(cpuDevice)
-prediction = model(tensor).cpu().detach().numpy()
-
+predictions = model(tensor).cpu().detach().numpy()
+print(predictions)
 end = time.time()
-print(string_labels[np.argmax(prediction)])
+# print(string_labels[np.argmax(predictions)])
 print(f'time: {end-start} seconds')

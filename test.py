@@ -21,7 +21,8 @@ def accuracyCalc(preds, lables):
   return acc
 
 transforms = torchvision.transforms.Compose([
-       torchvision.transforms.ToTensor(),                   
+       torchvision.transforms.ToTensor(),  
+       torchvision.transforms.Normalize((0),(1))                 
 ])
 
 dataset = torchvision.datasets.FashionMNIST("./dataset_test",download=False, transform=transforms, train=False)
