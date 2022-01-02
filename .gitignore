@@ -3,3 +3,4 @@ weights.pth
 dataset
 dataset_test
 wandb
+.gitignore
